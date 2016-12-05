@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AsteroidsWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="720" Width="443" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush ImageSource="/AsteroidsWPF;component/Resources/space.png" Stretch="None"/>
+    </Window.Background>
 </Window>
