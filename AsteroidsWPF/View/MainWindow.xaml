@@ -6,7 +6,31 @@
         xmlns:local="clr-namespace:AsteroidsWPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="443" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Window.Background>
-        <ImageBrush ImageSource="/AsteroidsWPF;component/Resources/space.png" Stretch="None"/>
-    </Window.Background>
+    <Canvas Width="443" Height="720">
+        <Canvas.Background>
+            <ImageBrush ImageSource="/AsteroidsWPF;component/Resources/space.png" Stretch="None"/>
+        </Canvas.Background>
+        <Image Source="/AsteroidsWPF;component/Resources/spaceship.png" Canvas.Left="-74" Canvas.Top="-93"></Image>
+        <Label Content="Asteroids" FontSize="92" Canvas.Left="12" Canvas.Top="23" FontWeight="Bold">
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FF513131"/>
+                    <GradientStop Color="#FFDE2C2C" Offset="1"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+        </Label>
+        <Label Foreground="White" FontSize="28" Canvas.Top="486" Canvas.Left="16" FontWeight="Bold">
+            <TextBlock>
+		        Enter - Start game
+		        <LineBreak />
+		        Space - Pause/Resume game
+		        <LineBreak />
+		        WASD - Control spaceship
+		        <LineBreak />
+		        Arrow keys - Control spaceship
+		        <LineBreak />
+		        Esc - Exit game
+            </TextBlock>
+        </Label>
+    </Canvas>
 </Window>
