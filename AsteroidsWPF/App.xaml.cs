@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Asteroids.Model;
+using AsteroidsWPF.ViewModel;
 using System.Windows;
 
 namespace AsteroidsWPF
@@ -13,5 +9,23 @@ namespace AsteroidsWPF
     /// </summary>
     public partial class App : Application
     {
+        private AsteroidsGame model;
+        private AsteroidsViewModel viewModel;
+        private MainWindow view;
+        private const int FPS = 60;
+
+        public App()
+        {
+            Startup += App_Startup;
+        }
+
+        private void App_Startup(object sender, StartupEventArgs e)
+        {
+            view = new MainWindow();
+            model = new AsteroidsGame(new GameRules(view.Width, view.Height), FPS);
+            viewModel = new AsteroidsViewModel(model);
+
+            view.Show();
+        }
     }
 }

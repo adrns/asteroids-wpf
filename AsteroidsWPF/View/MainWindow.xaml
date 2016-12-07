@@ -10,8 +10,8 @@
         <Canvas.Background>
             <ImageBrush ImageSource="/AsteroidsWPF;component/Resources/space.png" Stretch="None"/>
         </Canvas.Background>
-        <Image Source="/AsteroidsWPF;component/Resources/spaceship.png" Canvas.Left="-74" Canvas.Top="-93"></Image>
-        <Label Content="Asteroids" FontSize="92" Canvas.Left="12" Canvas.Top="23" FontWeight="Bold">
+        <Image Visibility="{Binding InMenuMode}" Source="/AsteroidsWPF;component/Resources/spaceship.png" Canvas.Left="-74" Canvas.Top="-93"></Image>
+        <Label Visibility="{Binding InMenuMode}" Content="Asteroids" FontSize="92" Canvas.Left="12" Canvas.Top="23" FontWeight="Bold">
             <Label.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                     <GradientStop Color="#FF513131"/>
@@ -19,7 +19,7 @@
                 </LinearGradientBrush>
             </Label.Foreground>
         </Label>
-        <Label Foreground="White" FontSize="28" Canvas.Top="486" Canvas.Left="16" FontWeight="Bold">
+        <Label Visibility="{Binding InMenuMode}" Foreground="White" FontSize="28" Canvas.Top="486" Canvas.Left="16" FontWeight="Bold">
             <TextBlock>
 		        Enter - Start game
 		        <LineBreak />
