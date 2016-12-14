@@ -13,11 +13,16 @@ namespace Asteroids.Model
         private Timer timer;
         private Random random = new Random();
         private Stopwatch stopWatch;
+        public enum EGameState { Running, Paused, GameOver }
 
+        private EGameState gameState;
+        public EGameState GameState
+        {
+            get { return gameState; }
+            private set { gameState = value; OnGameStateChange?.Invoke(this, new GameStateEventArgs(gameState)); }
+        }
         private int viewUpdateInterval;
         private long lastUpdate;
-        private bool isStarted = false;
-        private bool isOver = false;
         private bool movingLeft = false;
         private bool movingRight = false;
         private bool movingUp = false;
@@ -26,6 +31,9 @@ namespace Asteroids.Model
         public delegate void FrameUpdateHandler(object sender, FrameEventArgs e);
         public event FrameUpdateHandler OnFrameUpdate;
 
+        public delegate void GameStateHandler(object sender, GameStateEventArgs e);
+        public event GameStateHandler OnGameStateChange;
+
         public AsteroidsGame(IGameRules gameRules, int fps)
         {
             this.gameRules = gameRules;
@@ -33,14 +41,14 @@ namespace Asteroids.Model
             timer = new Timer(gameRules.SpeedMs);
             timer.Elapsed += gameLoop;
             stopWatch = new Stopwatch();
+            GameState = EGameState.GameOver;
         }
 
         public void start()
         {
-            if (!isStarted || isOver)
+            if (GameState == EGameState.GameOver)
             {
-                isOver = false;
-                isStarted = true;
+                GameState = EGameState.Running;
                 asteroids.Clear();
                 player = new SpaceShip(gameRules);
                 timer.Start();
@@ -51,8 +59,9 @@ namespace Asteroids.Model
 
         public void resume()
         {
-            if (isStarted && !isOver)
+            if (GameState == EGameState.Paused)
             {
+                GameState = EGameState.Running;
                 timer.Start();
                 stopWatch.Start();
             }
@@ -60,23 +69,20 @@ namespace Asteroids.Model
 
         public void pause()
         {
-            if (isStarted && !isOver)
+            if (GameState == EGameState.Running)
             {
+                GameState = EGameState.Paused;
                 timer.Stop();
                 stopWatch.Stop();
             }
         }
-
-        public bool Paused { get { return !timer.Enabled; } }
 
         private void gameLoop(object sender, ElapsedEventArgs e)
         {
             despawnObjects();
             advanceObjects();
             spawnObjects();
-            if (playerCollided())
-                gameOver();
-            updateView();
+            if (playerCollided()) gameOver(); else updateView();
         }
 
         private void updateView()
@@ -85,7 +91,7 @@ namespace Asteroids.Model
             if (viewUpdateInterval < now - lastUpdate)
             {
                 lastUpdate = now;
-                OnFrameUpdate(this, new FrameEventArgs(player, asteroids, stopWatch.ElapsedMilliseconds / 1000L));
+                OnFrameUpdate?.Invoke(this, new FrameEventArgs(player, asteroids, stopWatch.ElapsedMilliseconds / 1000L));
             }
         }
 
@@ -125,15 +131,11 @@ namespace Asteroids.Model
             return false;
         }
 
-        public bool Started { get { return isStarted; } }
-
-        public bool GameOver { get { return isOver; } }
-
         private void gameOver()
         {
             timer.Stop();
             stopWatch.Stop();
-            isOver = true;
+            GameState = EGameState.GameOver;
         }
 
         public void leftPressed()

@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace AsteroidsWPF.ViewModel
 {
@@ -19,9 +20,15 @@ namespace AsteroidsWPF.ViewModel
         public DelegateCommand DownCommand { get; private set; }
         public DelegateCommand RightCommand { get; private set; }
 
+        public Visibility MenuVisibility { get; private set; }
+        public Visibility PauseVisiblity { get; private set; }
+        public Visibility GameVisibility { get; private set; }
+        public Visibility GameOverVisibility { get; private set; }
+
         public AsteroidsViewModel(AsteroidsGame model)
         {
             this.model = model;
+            model.OnGameStateChange += Model_OnGameStateChange;
             EnterCommand = new DelegateCommand(param => model.start());
             SpaceCommand = new DelegateCommand(param => model.pause());
             EscCommand = new DelegateCommand(param => OnExit());
@@ -29,6 +36,37 @@ namespace AsteroidsWPF.ViewModel
             LeftCommand = new DelegateCommand(param => model.leftPressed());
             DownCommand = new DelegateCommand(param => model.downPressed());
             RightCommand = new DelegateCommand(param => model.rightPressed());
+        }
+
+        private void Model_OnGameStateChange(object sender, GameStateEventArgs e)
+        {
+            switch (e.GameState)
+            {
+                case (AsteroidsGame.EGameState.Running):
+                    {
+                        GameVisibility = Visibility.Visible;
+                        MenuVisibility = Visibility.Hidden;
+                        GameOverVisibility = Visibility.Hidden;
+                        PauseVisiblity = Visibility.Hidden;
+                        break;
+                    }
+                case (AsteroidsGame.EGameState.Paused):
+                    {
+                        GameVisibility = Visibility.Visible;
+                        MenuVisibility = Visibility.Hidden;
+                        GameOverVisibility = Visibility.Hidden;
+                        PauseVisiblity = Visibility.Visible;
+                        break;
+                    }
+                case (AsteroidsGame.EGameState.GameOver):
+                    {
+                        GameVisibility = Visibility.Visible;
+                        MenuVisibility = Visibility.Hidden;
+                        GameOverVisibility = Visibility.Hidden;
+                        PauseVisiblity = Visibility.Hidden;
+                        break;
+                    }
+            }
         }
 
         private void OnExit()
