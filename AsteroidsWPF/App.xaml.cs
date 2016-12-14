@@ -25,6 +25,7 @@ namespace AsteroidsWPF
             model = new AsteroidsGame(new GameRules(view.Width, view.Height), FPS);
             viewModel = new AsteroidsViewModel(model);
 
+            view.DataContext = viewModel;
             view.Show();
         }
     }
