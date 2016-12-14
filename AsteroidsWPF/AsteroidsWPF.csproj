@@ -69,6 +69,7 @@
     <Compile Include="Model\FrameEventArgs.cs" />
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\GameRules.cs" />
+    <Compile Include="Model\GameStateEventArgs.cs" />
     <Compile Include="Model\IGameRules.cs" />
     <Compile Include="Model\SpaceShip.cs" />
     <Compile Include="ViewModel\AsteroidsViewModel.cs" />
