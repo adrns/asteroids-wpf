@@ -10,9 +10,6 @@
         <KeyBinding Key="Enter" Command="{Binding EnterCommand}"></KeyBinding>
         <KeyBinding Key="Space" Command="{Binding SpaceCommand}"></KeyBinding>
         <KeyBinding Key="Esc" Command="{Binding EscCommand}"></KeyBinding>
-        <KeyBinding Key="Enter" Command="{Binding EnterCommand}"></KeyBinding>
-        <KeyBinding Key="Space" Command="{Binding SpaceCommand}"></KeyBinding>
-        <KeyBinding Key="Esc" Command="{Binding EscCommand}"></KeyBinding>
         <KeyBinding Key="W" Command="{Binding UpCommand}"></KeyBinding>
         <KeyBinding Key="A" Command="{Binding LeftCommand}"></KeyBinding>
         <KeyBinding Key="S" Command="{Binding DownCommand}"></KeyBinding>

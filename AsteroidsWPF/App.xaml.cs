@@ -22,11 +22,19 @@ namespace AsteroidsWPF
         private void App_Startup(object sender, StartupEventArgs e)
         {
             view = new MainWindow();
+
             model = new AsteroidsGame(new GameRules(view.Width, view.Height), FPS);
+
             viewModel = new AsteroidsViewModel(model);
+            viewModel.Exit += ViewModel_Exit;
 
             view.DataContext = viewModel;
             view.Show();
+        }
+
+        private void ViewModel_Exit(object sender, System.EventArgs e)
+        {
+            view.Close();
         }
     }
 }
