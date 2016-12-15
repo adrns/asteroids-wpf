@@ -12,7 +12,7 @@ namespace AsteroidsWPF
         private AsteroidsGame model;
         private AsteroidsViewModel viewModel;
         private MainWindow view;
-        private const int FPS = 60;
+        private const int FPS = 120;
 
         public App()
         {

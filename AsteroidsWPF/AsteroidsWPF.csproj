@@ -74,6 +74,7 @@
     <Compile Include="Model\SpaceShip.cs" />
     <Compile Include="ViewModel\AsteroidsViewModel.cs" />
     <Compile Include="ViewModel\DelegateCommand.cs" />
+    <Compile Include="ViewModel\VisibilityConverter.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

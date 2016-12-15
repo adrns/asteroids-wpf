@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AsteroidsWPF.ViewModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AsteroidsWPF
 {
@@ -23,6 +12,31 @@ namespace AsteroidsWPF
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (null == DataContext) return;
+            var viewModel = DataContext as AsteroidsViewModel;
+            switch (e.Key)
+            {
+                case Key.W:
+                case Key.Up:
+                    viewModel.UpReleasedCommand.Execute(null);
+                    break;
+                case Key.A:
+                case Key.Left:
+                    viewModel.LeftReleasedCommand.Execute(null);
+                    break;
+                case Key.S:
+                case Key.Down:
+                    viewModel.DownReleasedCommand.Execute(null);
+                    break;
+                case Key.D:
+                case Key.Right:
+                    viewModel.RightReleasedCommand.Execute(null);
+                    break;
+            }
         }
     }
 }

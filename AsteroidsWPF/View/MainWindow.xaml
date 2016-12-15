@@ -3,9 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AsteroidsWPF"
+        xmlns:local="clr-namespace:AsteroidsWPF.ViewModel"
         mc:Ignorable="d" Title="MainWindow" Width="443" Height="720"
-        WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" KeyUp="Window_KeyUp">
+    <Window.Resources>
+        <local:VisibilityConverter x:Key="VisibilityConverter" />
+        <Style TargetType="Image">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+        </Style>
+    </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="Enter" Command="{Binding EnterCommand}"></KeyBinding>
         <KeyBinding Key="Space" Command="{Binding SpaceCommand}"></KeyBinding>
@@ -20,11 +26,8 @@
         <KeyBinding Key="Right" Command="{Binding RightCommand}"></KeyBinding>
     </Window.InputBindings>
     <Canvas>
-        <Canvas.Background>
-            <ImageBrush ImageSource="/AsteroidsWPF;component/Resources/space.png" Stretch="None"/>
-        </Canvas.Background>
-        <Image Visibility="{Binding InMenuMode}" Source="/AsteroidsWPF;component/Resources/spaceship.png" Canvas.Left="-74" Canvas.Top="-93"></Image>
-        <Label Visibility="{Binding InMenuMode}" Content="Asteroids" FontSize="92" Canvas.Left="12" Canvas.Top="23" FontWeight="Bold">
+        <Image Visibility="{Binding MenuVisibility, Converter={StaticResource VisibilityConverter}}" Source="/AsteroidsWPF;component/Resources/spaceship.png" Canvas.Left="-74" Canvas.Top="-93"></Image>
+        <Label Visibility="{Binding MenuVisibility, Converter={StaticResource VisibilityConverter}}" Content="Asteroids" FontSize="92" Canvas.Left="12" Canvas.Top="23" FontWeight="Bold">
             <Label.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                     <GradientStop Color="#FF513131"/>
@@ -32,7 +35,7 @@
                 </LinearGradientBrush>
             </Label.Foreground>
         </Label>
-        <Label Visibility="{Binding InMenuMode}" Foreground="White" FontSize="28" Canvas.Top="486" Canvas.Left="16" FontWeight="Bold">
+        <Label Visibility="{Binding MenuVisibility, Converter={StaticResource VisibilityConverter}}" Foreground="White" FontSize="28" Canvas.Top="486" Canvas.Left="16" FontWeight="Bold">
             <TextBlock>
 		        Enter - Start game
 		        <LineBreak />
@@ -45,5 +48,39 @@
 		        Esc - Exit game
             </TextBlock>
         </Label>
+        <Label Visibility="{Binding GameVisibility, Converter={StaticResource VisibilityConverter}, FallbackValue=Hidden}" Content="{Binding ElapsedTime, FallbackValue=00:00}" FontSize="160" Canvas.Left="16" Canvas.Top="77" FontWeight="Bold" Foreground="#99FFFFFF" />
+        <Label Visibility="{Binding PauseVisibility, Converter={StaticResource VisibilityConverter}, FallbackValue=Hidden}" Content="Paused" FontSize="92" Canvas.Left="62" Canvas.Top="300" FontWeight="Bold" Foreground="#99FFFFFF" Panel.ZIndex="1" />
+        <Image Source="/AsteroidsWPF;component/Resources/spaceship.png"
+               RenderOptions.BitmapScalingMode="HighQuality"
+               Visibility="{Binding GameVisibility, FallbackValue=Hidden, Converter={StaticResource VisibilityConverter}}"
+               Canvas.Left="{Binding Player.X}"
+               Canvas.Top="{Binding Player.Y}"
+               Width="{Binding Player.Size, FallbackValue=0}"
+               Height="{Binding Player.Size, FallbackValue=0}" />
+        <Rectangle Visibility="{Binding GameOverVisibility, Converter={StaticResource VisibilityConverter}, FallbackValue=Hidden}" Panel.ZIndex="2" Fill="#7F000000" Width="443" Height="727" />
+        <Label Visibility="{Binding GameOverVisibility, Converter={StaticResource VisibilityConverter}, FallbackValue=Hidden}" Content="Game Over" FontSize="78" Canvas.Top="300" FontWeight="Bold" Foreground="#99FFFFFF" Panel.ZIndex="3" Canvas.Left="14" />
+        <ItemsControl Visibility="{Binding GameVisibility, FallbackValue=Hidden, Converter={StaticResource VisibilityConverter}}"  ItemsSource="{Binding Asteroids}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding X}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                    <Setter Property="Width" Value="{Binding Size}" />
+                    <Setter Property="Height" Value="{Binding Size}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="/AsteroidsWPF;component/Resources/asteroid.png" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Canvas.Background>
+            <ImageBrush ImageSource="/asteroidswpf;component/resources/space.png" Stretch="None" />
+        </Canvas.Background>
     </Canvas>
 </Window>
