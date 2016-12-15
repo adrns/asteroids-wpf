@@ -138,44 +138,13 @@ namespace Asteroids.Model
             GameState = EGameState.GameOver;
         }
 
-        public void leftPressed()
-        {
-            movingLeft = true;
-        }
-
-        public void rightPressed()
-        {
-            movingRight = true;
-        }
-
-        public void leftReleased()
-        {
-            movingLeft = false;
-        }
-
-        public void rightReleased()
-        {
-            movingRight = false;
-        }
-
-        public void upPressed()
-        {
-            movingUp = true;
-        }
-
-        public void downPressed()
-        {
-            movingDown = true;
-        }
-
-        public void upReleased()
-        {
-            movingUp = false;
-        }
-
-        public void downReleased()
-        {
-            movingDown = false;
-        }
+        public void leftPressed() { movingLeft = true; }
+        public void rightPressed() { movingRight = true; }
+        public void leftReleased() { movingLeft = false; }
+        public void rightReleased() { movingRight = false; }
+        public void upPressed() { movingUp = true; }
+        public void downPressed() { movingDown = true; }
+        public void upReleased() { movingUp = false; }
+        public void downReleased() { movingDown = false; }
     }
 }
