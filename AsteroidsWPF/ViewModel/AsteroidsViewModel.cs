@@ -9,28 +9,14 @@ using System.Windows.Data;
 
 namespace AsteroidsWPF.ViewModel
 {
-    class AsteroidsViewModel : INotifyPropertyChanged
+    public class AsteroidsViewModel : INotifyPropertyChanged
     {
-        class VisibilityConverter : IValueConverter
-        {
-            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                bool visible = (bool)value;
-                return visible ? true : false;
-            }
-
-            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                return (Visibility)value == Visibility.Visible;
-            }
-        }
-
         private AsteroidsGame model;
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler Exit;
         public DelegateCommand EnterCommand { get; private set; }
-        public DelegateCommand SpaceCommand { get; private set; }
+        public DelegateCommand PauseCommand { get; private set; }
         public DelegateCommand EscCommand { get; private set; }
         public DelegateCommand UpCommand { get; private set; }
         public DelegateCommand LeftCommand { get; private set; }
@@ -80,7 +66,7 @@ namespace AsteroidsWPF.ViewModel
             GameVisibility = false;
             GameOverVisibility = false;
             PauseVisibility = false;
-            SpaceCommand = new DelegateCommand(param => { if (model.GameState == AsteroidsGame.EGameState.Paused) model.resume(); else model.pause(); });
+            PauseCommand = new DelegateCommand(param => { if (model.GameState == AsteroidsGame.EGameState.Paused) model.resume(); else model.pause(); });
             EscCommand = new DelegateCommand(param => OnExit());
             UpCommand = new DelegateCommand(param => model.upPressed());
             LeftCommand = new DelegateCommand(param => model.leftPressed());
