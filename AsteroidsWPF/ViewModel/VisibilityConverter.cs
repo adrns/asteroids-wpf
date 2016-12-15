@@ -7,7 +7,6 @@ namespace AsteroidsWPF.ViewModel
 {
     public class VisibilityConverter : IValueConverter
     {
-        static int a = 0;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool visible = (bool)value;
